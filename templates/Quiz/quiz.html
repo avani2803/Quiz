@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href="{% static 'css/index.css'    %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</head>
+<body style="background-color:  #f1f1f1f1;" onload="stopWatch();" id="body">
+  <form method="post" action="/submit">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+    <a class="navbar-brand" href="#">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj9a6FJBPlAdE22gkjBYv9hBZRdHuvTEcQ7w&usqp=CAU" width="30" height="30" alt="">
+    </a>
+    <div id="nav-placeholder"></div>
+    <a class="navbar-brand" href="#">Quizzone</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul 
+    class="navbar-nav mr-auto">
+      
+        <li
+         class="nav-item active">
+          <a class="nav-link">Home <span class="sr-only">(current)</span></a>
+        </li>
+          <li  class="nav-item active"  >
+            <a  class="nav-link" href="/about" >About Us  <span class="sr-only">(current)</span></a>
+            </li>
+            <li  class="nav-item active"  >
+                <a  class="nav-link" href="http://127.0.0.1:8000/logout" >logout  <span class="sr-only">(current)</span></a>
+                </li>        
+      </ul>
+    </div>
+    <div id="time" style="color: white;">00:00</h4>
+    <input id="timePay" name="hidden" >
+  </div>
+  </nav>
+
+      <div style="height: 150px;"></div>
+      
+      <div class="slideshow-container">
+        
+          {%csrf_token %}
+        <!-- Full-width slides/quotes -->
+        <input id="QuizID" name="QuizID" type="hidden" value={{quizs1.quizID}}>
+          <div class="mySlides">
+          <h3><label for="quizs1">Q1. {{quizs1.question.question}}</label><br>
+            <table style="width: 60%;">
+          <tr>
+            <th><label for={{quizs1.question.id}}>{{quizs1.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs1.question.id}}" name="{{quizs1.question.id}}" value="{{quizs1.question.wrongAnswer1}}" required onclick="checkAns('{{quizs1.question.answer}}','{{quizs1.question.wrongAnswer1}}','ans1','{{quizs1.question.id}}c')"></th>
+             </tr>
+          <tr><th>
+            <label for={{quizs1.question.id}}>{{quizs1.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs1.question.id}}c" name="{{quizs1.question.id}}" value="{{quizs1.question.answer}}" required onclick="checkAns('{{quizs1.question.answer}}','{{quizs1.question.answer}}','ans1','empty')"></th>
+         </tr>
+          <tr>
+            <th><label for="{{quizs1.question.id}}">{{quizs1.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs1.question.id}}" name="{{quizs1.question.id}}" value="{{quizs1.question.wrongAnswer2}}" onclick="checkAns('{{quizs1.question.answer}}','{{quizs1.question.wrongAnswer2}}','ans1','{{quizs1.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs1.question.id}}>{{quizs1.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs1.question.id}}" name="{{quizs1.question.id}}" value="{{quizs1.question.wrongAnswer3}}" onclick="checkAns('{{quizs1.question.answer}}','{{quizs1.question.wrongAnswer3}}','ans1','{{quizs1.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans1"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+          
+      
+        <div class="mySlides">
+          <h3><label for="quizs2">Q2. {{quizs2.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs2.question.id}}>{{quizs2.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs2.question.id}}" name="{{quizs2.question.id}}" value="{{quizs2.question.wrongAnswer1}}" onclick="checkAns('{{quizs2.question.answer}}','{{quizs2.question.wrongAnswer1}}','ans2','{{quizs2.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs2.question.id}}">{{quizs2.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs2.question.id}}" name="{{quizs2.question.id}}" value="{{quizs2.question.wrongAnswer2}}" onclick="checkAns('{{quizs2.question.answer}}','{{quizs2.question.wrongAnswer2}}','ans2','{{quizs2.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs2.question.id}}>{{quizs2.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs2.question.id}}" name="{{quizs2.question.id}}" value="{{quizs2.question.wrongAnswer3}}" onclick="checkAns('{{quizs2.question.answer}}','{{quizs2.question.wrongAnswer3}}','ans2','{{quizs2.question.id}}c')" required></th>
+          </tr>
+          <tr><th>
+            <label for={{quizs2.question.id}}>{{quizs2.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs2.question.id}}c" name="{{quizs2.question.id}}" value="{{quizs2.question.answer}}" onclick="checkAns('{{quizs2.question.answer}}','{{quizs2.question.answer}}','ans2','empty')" required></th>
+         </tr>
+          <tr>
+            <th>
+              <p id="ans2"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+        
+        
+        <div class="mySlides">
+          <h3><label for="quizs3">Q3. {{quizs3.question.question}}</label><br>
+            <table style="width: 60%;">
+              <tr><th>
+                <label for={{quizs3.question.id}}>{{quizs3.question.answer}}</label></th>
+                <th><input type="radio" id="{{quizs3.question.id}}c" name="{{quizs3.question.id}}" value="{{quizs3.question.answer}}" onclick="checkAns('{{quizs3.question.answer}}','{{quizs3.question.answer}}','ans3','empty')" required></th>
+             </tr>
+          <tr>
+            <th><label for={{quizs3.question.id}}>{{quizs3.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs3.question.id}}" name="{{quizs3.question.id}}" value="{{quizs3.question.wrongAnswer1}}" onclick="checkAns('{{quizs3.question.answer}}','{{quizs3.question.wrongAnswer1}}','ans3','{{quizs3.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs3.question.id}}">{{quizs3.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs3.question.id}}" name="{{quizs3.question.id}}" value="{{quizs3.question.wrongAnswer2}}" onclick="checkAns('{{quizs3.question.answer}}','{{quizs3.question.wrongAnswer2}}','ans3','{{quizs3.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs3.question.id}}>{{quizs3.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs3.question.id}}" name="{{quizs3.question.id}}" value="{{quizs3.question.wrongAnswer3}}" onclick="checkAns('{{quizs3.question.answer}}','{{quizs3.question.wrongAnswer3}}','ans3','{{quizs3.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans3"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+
+        <div class="mySlides">
+          <h3><label for="quizs4">Q4. {{quizs4.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs4.question.id}}>{{quizs4.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs4.question.id}}" name="{{quizs4.question.id}}" value="{{quizs4.question.wrongAnswer1}}" onclick="checkAns('{{quizs4.question.answer}}','{{quizs4.question.wrongAnswer1}}','ans4','{{quizs4.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs4.question.id}}">{{quizs4.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs4.question.id}}" name="{{quizs4.question.id}}" value="{{quizs4.question.wrongAnswer2}}" onclick="checkAns('{{quizs4.question.answer}}','{{quizs4.question.wrongAnswer2}}','ans4','{{quizs4.question.id}}c')" required></th>
+            </tr>
+          <tr><th>
+            <label for={{quizs4.question.id}}>{{quizs4.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs4.question.id}}c" name="{{quizs4.question.id}}" value="{{quizs4.question.answer}}" onclick="checkAns('{{quizs4.question.answer}}','{{quizs4.question.answer}}','ans4','empty')" required></th>
+         </tr>
+          <tr>
+            <th><label for={{quizs4.question.id}}>{{quizs4.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs4.question.id}}" name="{{quizs4.question.id}}" value="{{quizs4.question.wrongAnswer3}}" onclick="checkAns('{{quizs4.question.answer}}','{{quizs4.question.wrongAnswer3}}','ans4','{{quizs4.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans4"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+      
+        <div class="mySlides">
+          <h3><label for="quizs5">Q5. {{quizs5.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs5.question.id}}>{{quizs5.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs5.question.id}}" name="{{quizs5.question.id}}" value="{{quizs5.question.wrongAnswer1}}" onclick="checkAns('{{quizs5.question.answer}}','{{quizs5.question.wrongAnswer1}}','ans5','{{quizs5.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs5.question.id}}">{{quizs5.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs5.question.id}}" name="{{quizs5.question.id}}" value="{{quizs5.question.wrongAnswer2}}" onclick="checkAns('{{quizs5.question.answer}}','{{quizs5.question.wrongAnswer2}}','ans5','{{quizs5.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs5.question.id}}>{{quizs5.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs5.question.id}}" name="{{quizs5.question.id}}" value="{{quizs5.question.wrongAnswer3}}" onclick="checkAns('{{quizs5.question.answer}}','{{quizs5.question.wrongAnswer3}}','ans5','{{quizs5.question.id}}c')" required></th>
+          </tr>
+          <tr><th>
+            <label for={{quizs5.question.id}}>{{quizs5.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs5.question.id}}c" name="{{quizs5.question.id}}" value="{{quizs5.question.answer}}" onclick="checkAns('{{quizs5.question.answer}}','{{quizs5.question.answer}}','ans5','empty')" required></th>
+         </tr>
+          <tr>
+            <th>
+              <p id="ans5"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+      
+        <div class="mySlides">
+          <h3><label for="quizs6">Q6. {{quizs6.question.question}}</label><br>
+            <table style="width: 60%;">
+              <tr><th>
+                <label for={{quizs6.question.id}}>{{quizs6.question.answer}}</label></th>
+                <th><input type="radio" id="{{quizs6.question.id}}c" name="{{quizs6.question.id}}" value="{{quizs6.question.answer}}" onclick="checkAns('{{quizs6.question.answer}}','{{quizs6.question.answer}}','ans6','empty')" required></th>
+             </tr>
+          <tr>
+            <th><label for={{quizs6.question.id}}>{{quizs6.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs6.question.id}}" name="{{quizs6.question.id}}" value="{{quizs6.question.wrongAnswer1}}" onclick="checkAns('{{quizs6.question.answer}}','{{quizs6.question.wrongAnswer1}}','ans6','{{quizs6.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs6.question.id}}">{{quizs6.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs6.question.id}}" name="{{quizs6.question.id}}" value="{{quizs6.question.wrongAnswer2}}" onclick="checkAns('{{quizs6.question.answer}}','{{quizs6.question.wrongAnswer2}}','ans6','{{quizs6.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs6.question.id}}>{{quizs6.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs6.question.id}}" name="{{quizs6.question.id}}" value="{{quizs6.question.wrongAnswer3}}" onclick="checkAns('{{quizs6.question.answer}}','{{quizs6.question.wrongAnswer3}}','ans6','{{quizs6.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans6"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+        
+        <div class="mySlides">
+          <h3><label for="quizs7">Q7. {{quizs7.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs7.question.id}}>{{quizs7.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs7.question.id}}" name="{{quizs7.question.id}}" value="{{quizs7.question.wrongAnswer1}}" onclick="checkAns('{{quizs7.question.answer}}','{{quizs7.question.wrongAnswer1}}','ans7','{{quizs7.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <tr><th>
+              <label for={{quizs7.question.id}}>{{quizs7.question.answer}}</label></th>
+              <th><input type="radio" id="{{quizs7.question.id}}c" name="{{quizs7.question.id}}" value="{{quizs7.question.answer}}" onclick="checkAns('{{quizs7.question.answer}}','{{quizs7.question.answer}}','ans7','empty')" required></th>
+           </tr>
+            <th><label for="{{quizs7.question.id}}">{{quizs7.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs7.question.id}}" name="{{quizs7.question.id}}" value="{{quizs7.question.wrongAnswer2}}" onclick="checkAns('{{quizs7.question.answer}}','{{quizs7.question.wrongAnswer2}}','ans7','{{quizs7.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs7.question.id}}>{{quizs7.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs7.question.id}}" name="{{quizs7.question.id}}" value="{{quizs7.question.wrongAnswer3}}" onclick="checkAns('{{quizs7.question.answer}}','{{quizs7.question.wrongAnswer3}}','ans7','{{quizs7.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans7"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+
+        <div class="mySlides">
+          <h3><label for="quizs8">Q8. {{quizs8.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs8.question.id}}>{{quizs8.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs8.question.id}}" name="{{quizs8.question.id}}" value="{{quizs8.question.wrongAnswer1}}" onclick="checkAns('{{quizs8.question.answer}}','{{quizs8.question.wrongAnswer1}}','ans8','{{quizs8.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs8.question.id}}">{{quizs8.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs8.question.id}}" name="{{quizs8.question.id}}" value="{{quizs8.question.wrongAnswer2}}" onclick="checkAns('{{quizs8.question.answer}}','{{quizs8.question.wrongAnswer2}}','ans8','{{quizs8.question.id}}c')"  required></th>
+            </tr>
+          <tr><th>
+            <label for={{quizs8.question.id}}>{{quizs8.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs8.question.id}}c" name="{{quizs8.question.id}}" value="{{quizs8.question.answer}}" onclick="checkAns('{{quizs8.question.answer}}','{{quizs8.question.answer}}','ans8','empty')" required></th>
+         </tr>
+          <tr>
+            <th><label for={{quizs8.question.id}}>{{quizs8.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs8.question.id}}" name="{{quizs8.question.id}}" value="{{quizs8.question.wrongAnswer3}}" onclick="checkAns('{{quizs8.question.answer}}','{{quizs8.question.wrongAnswer1}}','ans8','{{quizs8.question.id}}c')"  required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans8"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+      
+        <div class="mySlides">
+          <h3><label for="quizs9">Q9. {{quizs9.question.question}}</label><br>
+            <table style="width: 60%;">
+          <tr>
+            <th><label for={{quizs9.question.id}}>{{quizs9.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs9.question.id}}" name="{{quizs9.question.id}}" value="{{quizs9.question.wrongAnswer1}}" onclick="checkAns('{{quizs9.question.answer}}','{{quizs9.question.wrongAnswer1}}','ans9','{{quizs9.question.id}}c')"  required></th>
+             </tr>
+          <tr><th>
+            <label for={{quizs9.question.id}}>{{quizs9.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs9.question.id}}c" name="{{quizs9.question.id}}" value="{{quizs9.question.answer}}" onclick="checkAns('{{quizs9.question.answer}}','{{quizs9.question.answer}}','ans9','empty')"  required></th>
+         </tr>
+          <tr>
+            <th><label for="{{quizs9.question.id}}">{{quizs9.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs9.question.id}}" name="{{quizs9.question.id}}" value="{{quizs9.question.wrongAnswer2}}" onclick="checkAns('{{quizs9.question.answer}}','{{quizs9.question.wrongAnswer2}}','ans9','{{quizs9.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs9.question.id}}>{{quizs9.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs9.question.id}}" name="{{quizs9.question.id}}" value="{{quizs9.question.wrongAnswer3}}" onclick="checkAns('{{quizs9.question.answer}}','{{quizs9.question.wrongAnswer3}}','ans9','{{quizs9.question.id}}c')" required></th>
+          </tr>
+          <tr>
+            <th>
+              <p id="ans9"></p>
+            </th>
+          </tr>
+        </table>
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="button" value="Next" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+        <div class="mySlides">
+          <h3><label for="quizs10">10. {{quizs10.question.question}}</label><br>
+            <table style="width: 60%;">
+              
+          <tr>
+            <th><label for={{quizs10.question.id}}>{{quizs10.question.wrongAnswer1}}</label></th>
+            <th> <input type="radio" id="{{quizs10.question.id}}" name="{{quizs10.question.id}}" value="{{quizs10.question.wrongAnswer1}}" onclick="checkAns('{{quizs10.question.answer}}','{{quizs10.question.wrongAnswer1}}','ans10','{{quizs10.question.id}}c')" required></th>
+             </tr>
+          <tr>
+            <th><label for="{{quizs10.question.id}}">{{quizs10.question.wrongAnswer2}}</label></th>
+            <th><input type="radio" id="{{quizs10.question.id}}" name="{{quizs10.question.id}}" value="{{quizs10.question.wrongAnswer2}}" onclick="checkAns('{{quizs10.question.answer}}','{{quizs10.question.wrongAnswer2}}','ans10','{{quizs10.question.id}}c')" required></th>
+            </tr>
+          <tr>
+            <th><label for={{quizs10.question.id}}>{{quizs10.question.wrongAnswer3}}</label></th>
+          <th><input type="radio" id="{{quizs10.question.id}}" name="{{quizs10.question.id}}" value="{{quizs10.question.wrongAnswer3}}" onclick="checkAns('{{quizs10.question.answer}}','{{quizs10.question.wrongAnswer2}}','ans10','{{quizs10.question.id}}c')" required></th>
+          </tr>
+          <tr><th>
+            <label for={{quizs10.question.id}}>{{quizs10.question.answer}}</label></th>
+            <th><input type="radio" id="{{quizs10.question.id}}c" name="{{quizs10.question.id}}" value="{{quizs10.question.answer}}" onclick="checkAns('{{quizs10.question.answer}}','{{quizs10.question.answer}}','ans10','empty')" required></th>
+         </tr>
+          <tr>
+            <th>
+              <p id="ans10"></p>
+            </th>
+          </tr>
+        </table>
+        
+        <input type="button" value="Previous" onclick="plusSlides(-1)"  style="color: #000;font-size: medium;background-color: darkgray;">
+        <input type="submit" value="submit" onclick="plusSlides(1)" style="color: #000;font-size: medium;background-color: darkgray;">
+      </h3>
+        </div>
+
+      </form>
+      </div>
+              
+      
+</body>
+<script  type="text/javascript">
+
+function getTimerValue(){
+  var time  =  document.getElementById('time').innerHTML
+  document.getElementById("timePay").innerText = time
+}
+
+  function checkAns(correctans, given,pId,bID){
+    if(correctans.localeCompare(given)!=0) {
+      document.getElementById(pId).innerHTML = "Incorrect answer!!! Correct answer: "+correctans;
+    }
+    document.getElementById(bID).disabled = true;
+  }
+
+  var slideIndex = 1;
+  showSlides(slideIndex);
+  
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+  
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
+  }
+  
+  function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {slideIndex = 1}    
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
+  }
+  window.onload = function() {
+  stopWatch();
+ }
+
+function stopWatch() {
+  
+    time = -1;
+    incrementTime();
+    intervalId = setInterval(incrementTime, 1000);
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+
+
+  function incrementTime() {
+    time++;
+    document.getElementById("time").textContent =
+      ("0" + Math.trunc(time / 60)).slice(-2) +
+      ":" + ("0" + (time % 60)).slice(-2);
+  }
+}
+  </script>
+</html>
